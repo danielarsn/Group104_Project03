@@ -1,2 +1,23 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+class PayCalculations:
+    def __init__(self, caregivers):
+        self.caregivers = caregivers
+
+    def generate_weekly_report(self):
+        report = []
+        total_weekly_pay = 0
+        for caregiver in self.caregivers:
+            weekly_pay = caregiver.get_weekly_pay()
+            report.append(f"{caregiver.name}: ${weekly_pay:.2f}")
+            total_weekly_pay += weekly_pay
+        report.append(f"Total weekly pay: ${total_weekly_pay:.2f}")
+        return "\n".join(report)
+
+    def generate_monthly_report(self):
+        report = []
+        total_monthly_pay = 0
+        for caregiver in self.caregivers:
+            monthly_pay = caregiver.get_weekly_pay() * 4 #monthly so 4 weeks in a month
+            report.append(f"{caregiver.name}: ${monthly_pay:.2f}")
+            total_monthly_pay += monthly_pay
+        report.append(f"Total monthly pay: ${total_monthly_pay:.2f}")
+        return "\n".join(report)
