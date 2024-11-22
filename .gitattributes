@@ -1,23 +1,28 @@
 class PayCalculations:
     def __init__(self, caregivers):
         self.caregivers = caregivers
+    
+    def calculate_weekly_pay(self, caregiver):
+        return caregiver.hours * caregiver.pay_rate
 
     def generate_weekly_report(self):
         report = []
         total_weekly_pay = 0
         for caregiver in self.caregivers:
-            weekly_pay = caregiver.get_weekly_pay()
-            report.append(f"{caregiver.name}: ${weekly_pay:.2f}")
+            weekly_pay = caregiver.get_weekly_pay(caregiver)
             total_weekly_pay += weekly_pay
-        report.append(f"Total weekly pay: ${total_weekly_pay:.2f}")
-        return "\n".join(report)
+            report.append({
+                'name': caregiver.name,
+                'weekly_pay': weekly_pay
+            })
+        report.append({
+            'name': 'Total Weekly Pay',
+            'weekly_pay': total_weekly
+        })
+        return report
 
-    def generate_monthly_report(self):
-        report = []
-        total_monthly_pay = 0
-        for caregiver in self.caregivers:
-            monthly_pay = caregiver.get_weekly_pay() * 4 #monthly so 4 weeks in a month
-            report.append(f"{caregiver.name}: ${monthly_pay:.2f}")
-            total_monthly_pay += monthly_pay
-        report.append(f"Total monthly pay: ${total_monthly_pay:.2f}")
-        return "\n".join(report)
+    def display_pay_report(self):
+        # Display or print pay report
+        report = self.generate_pay_report()
+        for entry in report:
+            print(f"{entry['name']}: ${entry['weekly_pay']:.2f}")
